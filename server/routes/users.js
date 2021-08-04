@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { User } = require("../models/User");
 const { auth } = require("../middleware/auth");
-const { response } = require("express");
 
 // register route
 router.post("/register", (req, res) => {

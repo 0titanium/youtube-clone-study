@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { registerUser } from "../../../_actions/user_action";
+import { Input } from "antd";
+import { Button } from "antd";
 
 function RegisterPage(props) {
   const dispatch = useDispatch();
@@ -56,7 +58,7 @@ function RegisterPage(props) {
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
-        height: "100vh",
+        height: "70vh",
       }}
     >
       <form
@@ -64,23 +66,22 @@ function RegisterPage(props) {
         onSubmit={onSubmitHandler}
       >
         <label>Email</label>
-        <input type="email" value={Email} onChange={onEmailHandler} />
+        <Input type="email" value={Email} onChange={onEmailHandler} />
 
         <label>Name</label>
-        <input type="text" value={Name} onChange={onNameHandler} />
+        <Input type="text" value={Name} onChange={onNameHandler} />
 
         <label>Password</label>
-        <input type="password" value={Password} onChange={onPasswordHandler} />
+        <Input.Password value={Password} onChange={onPasswordHandler} />
 
         <label>Confirm Password</label>
-        <input
-          type="password"
+        <Input.Password
           value={ConfirmPassword}
           onChange={onConfirmPasswordHandler}
         />
 
         <br />
-        <button type="submit">Sign Up</button>
+        <Button htmlType="submit">Sign Up</Button>
       </form>
     </div>
   );

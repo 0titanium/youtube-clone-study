@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const config = require("./config/key");
 const userRouter = require("./routes/users");
+const videoRouter = require("./routes/videos");
 
 // application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRouter);
+app.use("/api/videos", videoRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
