@@ -25,8 +25,17 @@
 
 upload 버튼을 만드니 logout만 있던 것보단 간격이 예뻐진듯 하다.
 
+
 upload form은 다 만들었고 multer library를 사용해서 저장하게 했다.
 
+
+thumbnail이랑 동영상이 다올라가게 했다. 어쩐지 git push가 느렸다.
+
+
+나중에 git ingore에 넣어도 적용이 안되는 것으로 알고 있는데 혹시?
+
+
+thumbnail 이미지가 제대로 표시되지않는 에러가 있다. 경로 문제인 것 같다.
 
 
 2021-08-04
