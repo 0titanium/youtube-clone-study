@@ -42,3 +42,38 @@ thumbnail 이미지가 제대로 표시되지않는 에러가 있다. 경로 문
 
 
 2021-08-04
+
+
+***
+
+
+
+thumbnail 이미지 에러를 해결했다.
+
+
+-> 해결법은 server/index.js에 "app.use("/uploads", express.static("uploads"));"를
+
+
+적어주는 것이었다. 서버의 static file들을 클라이언트에서 사용하기 위해서 필요한 것이다.
+
+
+자세한 내용은 https://expressjs.com/en/starter/static-files.html
+
+
+- props.hitory.push를 쓸 때는 withRouter를 써야한다고 했는데 안써도 잘 페이지를 이동한다?
+
+
+될 때와 안될 때의 차이점이 무엇인지?
+
+
+-> withRotuer는 Router(BrowserRotuer등) 하위 컴포넌트에 있지 않은데 route 기능을 써야할 때
+
+
+사용한다고 한다.
+
+
+vscode tab 이동 단축키는 'ctrl+tab'이다. 여태 불편하게 클릭하면서 살았다.
+
+
+
+2021-08-05

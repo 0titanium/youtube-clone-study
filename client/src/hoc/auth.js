@@ -12,7 +12,7 @@ export default function authFunc(SpecificComponent, option, adminRoute = null) {
   function AuthenticationCheck(props) {
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    const pushFunc = () => {
       dispatch(auth()).then((response) => {
         console.log(response);
 
@@ -32,6 +32,10 @@ export default function authFunc(SpecificComponent, option, adminRoute = null) {
           }
         }
       });
+    };
+
+    useEffect(() => {
+      pushFunc();
     }, []);
 
     return <SpecificComponent {...props} />;
