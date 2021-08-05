@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-// const { Video } = require("../models/Video");
+const { Video } = require("../models/Video");
 const multer = require("multer");
 const ffmpeg = require("fluent-ffmpeg");
 
@@ -44,8 +44,8 @@ router.post("/thumbnail", (req, res) => {
   let fileDuration = "";
 
   ffmpeg.ffprobe(req.body.filePath, function (err, metadata) {
-    console.dir(metadata);
-    console.log(metadata.format.duration);
+    // console.dir(metadata);
+    // console.log(metadata.format.duration);
 
     fileDuration = metadata.format.duration;
   });
@@ -62,7 +62,7 @@ router.post("/thumbnail", (req, res) => {
 
       return res.json({
         success: true,
-        filePath: thumbsFilePath,
+        thumbsFilePath: thumbsFilePath,
         fileDuration: fileDuration,
       });
     })
@@ -79,5 +79,50 @@ router.post("/thumbnail", (req, res) => {
       filename: "thumbnail-%b.png",
     });
 });
+
+// 비디오 업로드
+
+router.post("/uploadVideo", (req, res) => {
+  // 비디오 정보를 저장한다.
+
+  const video = new Video(req.body);
+
+  video.save((err, doc) => {
+    if (err) {
+      return res.json({ success: false, err });
+    }
+    return res.status(200).json({ success: true });
+  });
+});
+
+// 비디오 보내기
+
+router.get("/getVideos", (req, res) => {
+  // db에서 비디오 가져오기
+
+  Video.find()
+    .populate("writer")
+    .exec((err, videos) => {
+      if (err) {
+        return res.status(400).json({ success: false, err });
+      }
+
+      return res.status(200).json({ success: true, videos });
+    });
+});
+
+// router.get("/videoTail", (req, res) => {
+//   // db에서 비디오 가져오기
+
+//   Video.find()
+//     .populate("writer")
+//     .exec((err, videos) => {
+//       if (err) {
+//         return res.status(400).json({ success: false, err });
+//       }
+
+//       return res.status(200).json({ success: true, videos });
+//     });
+// });
 
 module.exports = router;
