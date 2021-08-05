@@ -75,5 +75,8 @@ thumbnail 이미지 에러를 해결했다.
 vscode tab 이동 단축키는 'ctrl+tab'이다. 여태 불편하게 클릭하면서 살았다.
 
 
+ladingPage에서 저장된 비디오를 불러오고 detail page 작업중
+
+
 
 2021-08-05
