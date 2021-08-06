@@ -80,3 +80,28 @@ ladingPage에서 저장된 비디오를 불러오고 detail page 작업중
 
 
 2021-08-05
+
+
+
+***
+
+landingPage에서 비디오 썸네일을 클릭하면 해당 비디오를 보여주는 videoDetailPage로 이동,
+
+
+videoDetailPage에서 영상과 다른 영상들을 보여주는 SideVideos까지 작성완료.
+
+
+남은 기능 -> 구독, 댓글, 좋아요/싫어요
+
+
+
+강의에 없지만 추가하고 싶은 것들
+
+
+-> Logout을 <div onClick={dropdown}>avatar name</div> 형태로
+
+-> 마이페이지 (내가 업로드한 영상들 보여주기, 삭제 기능)
+
+-> 생각나는 것은 이 정도? 강의를 완료하고 할까? 남은 것 하기전에 할까?
+
+2021-08-06

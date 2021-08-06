@@ -111,18 +111,18 @@ router.get("/getVideos", (req, res) => {
     });
 });
 
-// router.get("/videoTail", (req, res) => {
-//   // db에서 비디오 가져오기
+router.post("/getVideoDetail", (req, res) => {
+  // db에서 비디오 가져오기
 
-//   Video.find()
-//     .populate("writer")
-//     .exec((err, videos) => {
-//       if (err) {
-//         return res.status(400).json({ success: false, err });
-//       }
+  Video.findOne({ _id: req.body.videoId })
+    .populate("writer")
+    .exec((err, videoDetail) => {
+      if (err) {
+        return res.status(400).json({ success: false, err });
+      }
 
-//       return res.status(200).json({ success: true, videos });
-//     });
-// });
+      return res.status(200).json({ success: true, videoDetail });
+    });
+});
 
 module.exports = router;

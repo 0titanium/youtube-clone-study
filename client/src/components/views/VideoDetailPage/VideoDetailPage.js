@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { List, Avatar, Row, Col } from "antd";
-import axios from "axios";
+import Axios from "axios";
+import { VIDEO_SERVER } from "../../../Config";
+import SideVideos from "./Sections/SideVideos";
 
 function VideoDetailPage(props) {
   const videoId = props.match.params.videoId;
@@ -11,7 +13,18 @@ function VideoDetailPage(props) {
     videoId: videoId,
   };
 
-  const fetchVideos = () => {};
+  const fetchVideos = () => {
+    Axios.post(`${VIDEO_SERVER}/getVideoDetail`, videoVariable).then(
+      (response) => {
+        if (response.data.success) {
+          console.log(response.data);
+          setVideo(response.data.videoDetail);
+        } else {
+          alert("비디오를 불러오는 것에 실패했습니다.");
+        }
+      }
+    );
+  };
 
   const fetchComments = () => {};
 
@@ -27,35 +40,37 @@ function VideoDetailPage(props) {
           className="postPage"
           style={{ width: "100%", padding: "3rem 4em" }}
         >
-        mainVideo
-          {/* <video
-            style={{ width: "100%" }}
-            src={`http://localhost:5000/${Video.filePath}`}
-            controls
-          ></video>
+          {Video && (
+            <video
+              style={{ width: "100%", height: "527px" }}
+              src={`http://localhost:5000/${Video.filePath}`}
+              controls
+            ></video>
+          )}
 
           <List.Item
-            actions={[
-              <LikeDislikes
-                video
-                videoId={videoId}
-                userId={localStorage.getItem("userId")}
-              />,
-              <Subscriber
-                userTo={Video.writer._id}
-                userFrom={localStorage.getItem("userId")}
-              />,
-            ]}
+          // actions={[
+          //   <LikeDislikes
+          //     video
+          //     videoId={videoId}
+          //     userId={localStorage.getItem("userId")}
+          //   />,
+          //   <Subscriber
+          //     userTo={Video.writer._id}
+          //     userFrom={localStorage.getItem("userId")}
+          //   />,
+          // ]}
           >
             <List.Item.Meta
               avatar={<Avatar src={Video.writer && Video.writer.image} />}
-              title={<a href="https://ant.design">{Video.title}</a>}
+              title={<a href="/">{Video.title}</a>}
               description={Video.description}
             />
             <div></div>
           </List.Item>
 
-          <Comments
+          {/* Comments */}
+          {/* <Comments
             CommentLists={CommentLists}
             postId={Video._id}
             refreshFunction={updateComment}
@@ -63,8 +78,7 @@ function VideoDetailPage(props) {
         </div>
       </Col>
       <Col lg={6} xs={24}>
-      sideVideo
-        {/* <SideVideo /> */}
+        <SideVideos />
       </Col>
     </Row>
   );

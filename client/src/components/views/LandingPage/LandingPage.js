@@ -14,7 +14,6 @@ function LandingPage() {
       if (response.data.success) {
         console.log(response.data);
         setVideo(response.data.videos);
-        console.log(response.data.videos[0].writer.image);
       } else {
         alert("비디오를 가져오는 것에 실패했습니다.");
       }
@@ -25,7 +24,7 @@ function LandingPage() {
     fetchVideos();
   }, []);
 
-  const renderCards = Videos.map((video, index) => {
+  const renderCards = Videos.reverse().map((video, index) => {
     let minutes = Math.floor(video.duration / 60);
     let seconds = Math.floor(video.duration - minutes * 60);
 
