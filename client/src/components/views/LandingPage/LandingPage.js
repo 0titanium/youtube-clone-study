@@ -15,7 +15,7 @@ function LandingPage() {
         console.log(response.data);
         setVideo(response.data.videos);
       } else {
-        alert("비디오를 가져오는 것에 실패했습니다.");
+        alert("비디오를 가져오는데 실패했습니다.");
       }
     });
   };

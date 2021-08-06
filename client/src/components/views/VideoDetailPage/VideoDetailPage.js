@@ -3,11 +3,21 @@ import { List, Avatar, Row, Col } from "antd";
 import Axios from "axios";
 import { VIDEO_SERVER } from "../../../Config";
 import SideVideos from "./Sections/SideVideos";
+import Subscriber from "./Sections/Subscriber";
 
 function VideoDetailPage(props) {
+  const getCookie = (name, cookies) => {
+    const searchName = name + "=";
+    const searchNameLength = searchName.length;
+    const nameIndexStart = cookies.indexOf(searchName);
+    const Cookieval = cookies.substring(nameIndexStart + searchNameLength);
+
+    return Cookieval;
+  };
+  const userId = getCookie("user_id", document.cookie);
   const videoId = props.match.params.videoId;
   const [Video, setVideo] = useState([]);
-  const [CommentLists, setCommentLists] = useState([]);
+  // const [CommentLists, setCommentLists] = useState([]);
 
   const videoVariable = {
     videoId: videoId,
@@ -20,7 +30,7 @@ function VideoDetailPage(props) {
           console.log(response.data);
           setVideo(response.data.videoDetail);
         } else {
-          alert("비디오를 불러오는 것에 실패했습니다.");
+          alert("비디오를 불러오는데 실패했습니다.");
         }
       }
     );
@@ -49,17 +59,24 @@ function VideoDetailPage(props) {
           )}
 
           <List.Item
-          // actions={[
-          //   <LikeDislikes
-          //     video
-          //     videoId={videoId}
-          //     userId={localStorage.getItem("userId")}
-          //   />,
-          //   <Subscriber
-          //     userTo={Video.writer._id}
-          //     userFrom={localStorage.getItem("userId")}
-          //   />,
-          // ]}
+            // actions={[
+            //   <LikeDislikes
+            //     video
+            //     videoId={videoId}
+            //     userId={localStorage.getItem("userId")}
+            //   />,
+            //   <Subscriber
+            //     userTo={Video.writer._id}
+            //     userFrom={localStorage.getItem("userId")}
+            //   />,
+            // ]}
+
+            actions={
+                [<Subscriber
+                  userTo={Video.writer}
+                  userFrom={userId}
+                />]
+            }
           >
             <List.Item.Meta
               avatar={<Avatar src={Video.writer && Video.writer.image} />}

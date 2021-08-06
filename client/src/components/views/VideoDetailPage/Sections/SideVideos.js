@@ -11,7 +11,7 @@ function SideVideos() {
         console.log(response.data);
         setSideVideos(response.data.videos);
       } else {
-        alert("사이드 비디오를 불러오는 것에 실패했습니다.");
+        alert("사이드 비디오를 불러오는데 실패했습니다.");
       }
     });
   };
@@ -20,12 +20,15 @@ function SideVideos() {
     fetchSideVideos();
   }, []);
 
-  const sideVideoItems = SideVideos.map((video, index) => {
+  const sideVideoItems = SideVideos.reverse().map((video, index) => {
     let minutes = Math.floor(video.duration / 60);
     let seconds = Math.floor(video.duration - minutes * 60);
 
     return (
-      <div style={{ display: "flex", marginTop: "1rem", padding: "0 2rem" }}>
+      <div
+        key={index}
+        style={{ display: "flex", marginTop: "1rem", padding: "0 2rem" }}
+      >
         <div style={{ width: "40%", marginRight: "1rem" }}>
           <a href={`/video/${video._id}`} style={{ color: "gray" }}>
             <img
@@ -59,7 +62,7 @@ function SideVideos() {
   return (
     <div>
       <div style={{ marginTop: "3rem" }}></div>
-      {SideVideos && sideVideoItems}
+      {SideVideos.length !== 0 && sideVideoItems}
     </div>
   );
 }
