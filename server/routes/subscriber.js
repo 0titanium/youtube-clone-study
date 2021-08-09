@@ -21,11 +21,11 @@ router.post("/subscribed", (req, res) => {
     uesrTo: req.body.uesrTo,
     userFrom: req.body.userFrom,
   }).exec((err, subscribe) => {
-    let result = false;
-
     if (err) {
       return res.status(400).json({ success: false, err });
     }
+
+    let result = false;
 
     if (subscribe.length !== 0) {
       result = true;
@@ -36,9 +36,30 @@ router.post("/subscribed", (req, res) => {
 });
 
 // 구독 처리
-// router.post("/subscribe", (req, res) => {});
+router.post("/subscribe", (req, res) => {
+  const subscribe = new SubScriber(req.body);
+
+  subscribe.save((err, subs) => {
+    if (err) {
+      return res.status(400).json({ success: false, err });
+    }
+
+    return res.status(200).json({ success: true });
+  });
+});
 
 // 구독 취소 처리
-// router.post("/unSubscribe", (req, res) => {});
+router.post("/unSubscribe", (req, res) => {
+  SubScriber.findOneAndDelete({
+    uesrTo: req.body.uesrTo,
+    userFrom: req.body.userFrom,
+  }).exec((err, subs) => {
+    if (err) {
+      return res.status(400).json({ success: false, err });
+    }
+
+    return res.status(200).json({ success: true, subs });
+  });
+});
 
 module.exports = router;

@@ -4,6 +4,7 @@ import Axios from "axios";
 import { VIDEO_SERVER } from "../../../Config";
 import SideVideos from "./Sections/SideVideos";
 import Subscriber from "./Sections/Subscriber";
+import Comments from "./Sections/Comments";
 
 function VideoDetailPage(props) {
   const getCookie = (name, cookies) => {
@@ -17,10 +18,17 @@ function VideoDetailPage(props) {
   const userId = getCookie("user_id", document.cookie);
   const videoId = props.match.params.videoId;
   const [Video, setVideo] = useState([]);
-  // const [CommentLists, setCommentLists] = useState([]);
+  const [SameUser, setSameUser] = useState(false);
+  const [CommentLists, setCommentLists] = useState([]);
 
   const videoVariable = {
     videoId: videoId,
+  };
+
+  const isSameId = (uploaderId) => {
+    if (uploaderId !== userId) {
+      setSameUser(true);
+    }
   };
 
   const fetchVideos = () => {
@@ -29,11 +37,13 @@ function VideoDetailPage(props) {
         if (response.data.success) {
           console.log(response.data);
           setVideo(response.data.videoDetail);
+          isSameId(response.data.videoDetail.writer._id);
         } else {
           alert("비디오를 불러오는데 실패했습니다.");
         }
       }
     );
+    console.log(CommentLists);
   };
 
   const fetchComments = () => {};
@@ -72,10 +82,9 @@ function VideoDetailPage(props) {
             // ]}
 
             actions={
-                [<Subscriber
-                  userTo={Video.writer}
-                  userFrom={userId}
-                />]
+              SameUser && [
+                <Subscriber userTo={Video.writer} userFrom={userId} />,
+              ]
             }
           >
             <List.Item.Meta
@@ -87,11 +96,11 @@ function VideoDetailPage(props) {
           </List.Item>
 
           {/* Comments */}
-          {/* <Comments
+          <Comments
             CommentLists={CommentLists}
             postId={Video._id}
-            refreshFunction={updateComment}
-          /> */}
+            // refreshFunction={updateComment}
+          />
         </div>
       </Col>
       <Col lg={6} xs={24}>

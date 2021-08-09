@@ -33,7 +33,8 @@ function RightMenu(props) {
   } else {
     return (
       <Menu mode={props.mode}>
-      <Menu.Item key="upload">
+        {/* <p>{user.userData.name}</p> */}
+        <Menu.Item key="upload">
           <a href="/video/upload">Upload</a>
         </Menu.Item>
         {/* avatar + name - click - dropdown - mypage, logout */}
