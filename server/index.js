@@ -6,7 +6,8 @@ const cookieParser = require("cookie-parser");
 const config = require("./config/key");
 const userRouter = require("./routes/users");
 const videoRouter = require("./routes/videos");
-const subsRotuer = require("./routes/subscriber");
+const subsRouter = require("./routes/subscriber");
+const commentRouter = require("./routes/comments");
 
 // application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,7 +37,8 @@ app.use("/uploads", express.static("uploads"));
 
 app.use("/api/users", userRouter);
 app.use("/api/videos", videoRouter);
-app.use("/api/subscribe", subsRotuer);
+app.use("/api/subscribe", subsRouter);
+app.use("/api/comment", commentRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);

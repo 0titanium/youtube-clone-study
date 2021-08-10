@@ -5,18 +5,12 @@ import { VIDEO_SERVER } from "../../../Config";
 import SideVideos from "./Sections/SideVideos";
 import Subscriber from "./Sections/Subscriber";
 import Comments from "./Sections/Comments";
+import { getCookie } from "../../../getCookie/getCookie";
 
 function VideoDetailPage(props) {
-  const getCookie = (name, cookies) => {
-    const searchName = name + "=";
-    const searchNameLength = searchName.length;
-    const nameIndexStart = cookies.indexOf(searchName);
-    const Cookieval = cookies.substring(nameIndexStart + searchNameLength);
-
-    return Cookieval;
-  };
   const userId = getCookie("user_id", document.cookie);
   const videoId = props.match.params.videoId;
+
   const [Video, setVideo] = useState([]);
   const [SameUser, setSameUser] = useState(false);
   const [CommentLists, setCommentLists] = useState([]);
@@ -29,6 +23,10 @@ function VideoDetailPage(props) {
     if (uploaderId !== userId) {
       setSameUser(true);
     }
+  };
+
+  const updateComment = (newComment) => {
+    setCommentLists(CommentLists.concat(newComment));
   };
 
   const fetchVideos = () => {
@@ -46,7 +44,16 @@ function VideoDetailPage(props) {
     console.log(CommentLists);
   };
 
-  const fetchComments = () => {};
+  const fetchComments = () => {
+    Axios.post("/api/comment/getComments", videoVariable).then((response) => {
+      if (response.data.success) {
+        console.log("response.data.comments", response.data.comments);
+        setCommentLists(response.data.comments);
+      } else {
+        alert("댓글을 불러오는데 실패했습니다.");
+      }
+    });
+  };
 
   useEffect(() => {
     fetchVideos();
@@ -83,7 +90,11 @@ function VideoDetailPage(props) {
 
             actions={
               SameUser && [
-                <Subscriber userTo={Video.writer} userFrom={userId} />,
+                <Subscriber
+                  userTo={Video.writer}
+                  userFrom={userId}
+                  isLogin={userId !== "" ? true : false}
+                />,
               ]
             }
           >
@@ -99,7 +110,7 @@ function VideoDetailPage(props) {
           <Comments
             CommentLists={CommentLists}
             postId={Video._id}
-            // refreshFunction={updateComment}
+            refreshFunction={updateComment}
           />
         </div>
       </Col>

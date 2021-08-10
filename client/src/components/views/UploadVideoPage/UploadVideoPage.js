@@ -4,16 +4,9 @@ import Dropzone from "react-dropzone";
 import { PlusOutlined } from "@ant-design/icons";
 import Axios from "axios";
 import { VIDEO_SERVER } from "../../../Config";
+import { getCookie } from "../../../getCookie/getCookie";
 
 function UploadVideoPage(props) {
-  const getCookie = (name, cookies) => {
-    const searchName = name + "=";
-    const searchNameLength = searchName.length;
-    const nameIndexStart = cookies.indexOf(searchName);
-    const Cookieval = cookies.substring(nameIndexStart + searchNameLength);
-
-    return Cookieval;
-  };
   const userId = getCookie("user_id", document.cookie);
   const { Title } = Typography;
   const { TextArea } = Input;

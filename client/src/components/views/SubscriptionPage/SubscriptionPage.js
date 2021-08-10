@@ -3,20 +3,13 @@ import Axios from "axios";
 import { VIDEO_SERVER } from "../../../Config";
 import { Typography, Row, Col, Avatar, Card } from "antd";
 import moment from "moment";
+import { getCookie } from "../../../getCookie/getCookie";
 
 function SubscriptionPage() {
   const { Title } = Typography;
   const { Meta } = Card;
   const [Videos, setVideo] = useState([]);
 
-  const getCookie = (name, cookies) => {
-    const searchName = name + "=";
-    const searchNameLength = searchName.length;
-    const nameIndexStart = cookies.indexOf(searchName);
-    const Cookieval = cookies.substring(nameIndexStart + searchNameLength);
-
-    return Cookieval;
-  };
   const userId = getCookie("user_id", document.cookie);
 
   const fetchVideos = () => {
@@ -24,18 +17,22 @@ function SubscriptionPage() {
       userFrom: userId,
     };
 
-    Axios.post(`${VIDEO_SERVER}/getSubscriptionVideos`, subscriptionVar).then((response) => {
-      if (response.data.success) {
-        console.log(response.data);
-        setVideo(response.data.videos);
-      } else {
-        alert("비디오를 가져오는데 실패했습니다.");
+    Axios.post(`${VIDEO_SERVER}/getSubscriptionVideos`, subscriptionVar).then(
+      (response) => {
+        if (response.data.success) {
+          console.log(response.data);
+          setVideo(response.data.videos);
+        } else {
+          alert("비디오를 가져오는데 실패했습니다.");
+        }
       }
-    });
+    );
   };
 
   useEffect(() => {
-    fetchVideos();
+    if (userId !== "") {
+      fetchVideos();
+    }
   }, []);
 
   const renderCards = Videos.reverse().map((video, index) => {

@@ -5,9 +5,12 @@ import { SUBS_SERVER } from "../../../../Config";
 function Subscriber(props) {
   const userTo = props.userTo;
   const userFrom = props.userFrom;
+  const isLogin = props.isLogin;
 
   const [SubscriberNumber, setSubscriberNumber] = useState(0);
   const [Subscribed, setSubscribed] = useState(false);
+
+  // const isLogin =
 
   // 구독자 수 가져오기
   const fetchSubsNum = (subscribeNumberVariables) => {
@@ -72,7 +75,9 @@ function Subscriber(props) {
   useEffect(() => {
     let subscribeNumberVariables = { userTo: userTo, userFrom: userFrom };
     fetchSubsNum(subscribeNumberVariables);
-    fetchSubscribed(subscribeNumberVariables);
+    if (isLogin) {
+      fetchSubscribed(subscribeNumberVariables);
+    }
   }, []);
 
   const onSubscribe = () => {
@@ -81,10 +86,14 @@ function Subscriber(props) {
       userFrom: userFrom,
     };
 
-    if (Subscribed) {
-      fetchUnSubscribe(subscribeVariables);
+    if (!isLogin) {
+      alert("로그인이 필요한 기능입니다.");
     } else {
-      fetchSubscribe(subscribeVariables);
+      if (Subscribed) {
+        fetchUnSubscribe(subscribeVariables);
+      } else {
+        fetchSubscribe(subscribeVariables);
+      }
     }
   };
 

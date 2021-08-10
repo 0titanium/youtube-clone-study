@@ -1,29 +1,23 @@
 import React, { useState } from "react";
 import { Button, Input } from "antd";
 import axios from "axios";
-// import SingleComment from "./SingleComment";
-// import ReplyComment from "./ReplyComment";
-const { TextArea } = Input;
+import SingleComment from "./SingleComment";
+import ReplyComment from "./ReplyComment";
+import { getCookie } from "../../../../getCookie/getCookie";
 
 function Comments(props) {
+  const { TextArea } = Input;
+
   const [Comment, setComment] = useState("");
-
-  const getCookie = (name, cookies) => {
-    const searchName = name + "=";
-    const searchNameLength = searchName.length;
-    const nameIndexStart = cookies.indexOf(searchName);
-    const Cookieval = cookies.substring(nameIndexStart + searchNameLength);
-
-    return Cookieval;
-  };
 
   const userId = getCookie("user_id", document.cookie);
 
   const fetchComments = (variables) => {
     axios.post("/api/comment/saveComment", variables).then((response) => {
       if (response.data.success) {
+        console.log(response.data.id);
         setComment("");
-        props.refreshFunction(response.data.result);
+        props.refreshFunction(response.data.id);
       } else {
         alert("댓글 작성에 실패했습니다.");
       }
@@ -37,32 +31,32 @@ function Comments(props) {
   const onSubmit = (event) => {
     event.preventDefault();
 
-    if(userId === undefined){
-        alert("로그인이 필요한 기능입니다.");
-    }
-
     const variables = {
       content: Comment,
       writer: userId,
       postId: props.postId,
     };
 
-    // fetchComments(variables);
+    if (userId !== "") {
+      fetchComments(variables);
+    } else {
+      alert("로그인이 필요한 기능입니다.");
+    }
   };
 
   return (
     <div>
       <br />
-      <p> replies</p>
-      <hr />
-      {/* Comment Lists  */}
-      {/* {console.log(props.CommentLists)}
+      <p> replies </p>
+      <br />
 
+      {/* Comment Lists  */}
+      
       {props.CommentLists &&
         props.CommentLists.map(
           (comment, index) =>
             !comment.responseTo && (
-              <React.Fragment>
+              <React.Fragment key={index}>
                 <SingleComment
                   comment={comment}
                   postId={props.postId}
@@ -76,7 +70,7 @@ function Comments(props) {
                 />
               </React.Fragment>
             )
-        )} */}
+        )}
 
       {/* Root Comment Form */}
       <form style={{ display: "flex" }} onSubmit={onSubmit}>
@@ -84,7 +78,7 @@ function Comments(props) {
           style={{ width: "100%", borderRadius: "5px", resize: "none" }}
           onChange={handleChange}
           value={Comment}
-          placeholder="write some comments"
+          placeholder="댓글을 입력하세요."
         />
         <br />
         <Button style={{ width: "20%", height: "52px" }} onClick={onSubmit}>
