@@ -5,7 +5,9 @@ import { VIDEO_SERVER } from "../../../Config";
 import SideVideos from "./Sections/SideVideos";
 import Subscriber from "./Sections/Subscriber";
 import Comments from "./Sections/Comments";
+import LikeDislikes from "./Sections/LikeDislikes";
 import { getCookie } from "../../../getCookie/getCookie";
+import { COMMENT_SERVER } from "../../../Config";
 
 function VideoDetailPage(props) {
   const userId = getCookie("user_id", document.cookie);
@@ -45,14 +47,16 @@ function VideoDetailPage(props) {
   };
 
   const fetchComments = (videoVariable) => {
-    Axios.post("/api/comment/getComments", videoVariable).then((response) => {
-      if (response.data.success) {
-        console.log("response.data.comments", response.data.comments);
-        setCommentLists(response.data.comments);
-      } else {
-        alert("댓글을 불러오는데 실패했습니다.");
+    Axios.post(`${COMMENT_SERVER}/getComments`, videoVariable).then(
+      (response) => {
+        if (response.data.success) {
+          console.log("response.data.comments", response.data.comments);
+          setCommentLists(response.data.comments);
+        } else {
+          alert("댓글을 불러오는데 실패했습니다.");
+        }
       }
-    });
+    );
   };
 
   useEffect(() => {
@@ -76,20 +80,13 @@ function VideoDetailPage(props) {
           )}
 
           <List.Item
-            // actions={[
-            //   <LikeDislikes
-            //     video
-            //     videoId={videoId}
-            //     userId={localStorage.getItem("userId")}
-            //   />,
-            //   <Subscriber
-            //     userTo={Video.writer._id}
-            //     userFrom={localStorage.getItem("userId")}
-            //   />,
-            // ]}
-
             actions={
               SameUser && [
+                <LikeDislikes
+                  video
+                  videoId={videoId}
+                  userId={userId}
+                />,
                 <Subscriber
                   userTo={Video.writer}
                   userFrom={userId}

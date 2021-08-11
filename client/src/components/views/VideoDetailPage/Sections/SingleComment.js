@@ -3,7 +3,8 @@ import { Comment, Avatar, Button, Input } from "antd";
 import Axios from "axios";
 import { useSelector } from "react-redux";
 import { getCookie } from "../../../../getCookie/getCookie";
-// import LikeDislikes from "./LikeDislikes";
+import LikeDislikes from "./LikeDislikes";
+import { COMMENT_SERVER } from "../../../../Config";
 
 function SingleComment(props) {
   const { TextArea } = Input;
@@ -15,7 +16,7 @@ function SingleComment(props) {
   const [OpenReply, setOpenReply] = useState(false);
 
   const fetchComments = (variables) => {
-    Axios.post("/api/comment/saveComment", variables).then((response) => {
+    Axios.post(`${COMMENT_SERVER}/saveComment`, variables).then((response) => {
       if (response.data.success) {
         setCommentValue("");
         setOpenReply(!OpenReply);
@@ -52,11 +53,11 @@ function SingleComment(props) {
   };
 
   const actions = [
-    // <LikeDislikes
-    //   comment
-    //   commentId={props.comment._id}
-    //   userId={localStorage.getItem("userId")}
-    // />,
+    <LikeDislikes
+      comment
+      commentId={props.comment._id}
+      userId={userId}
+    />,
     <span onClick={openReply} key="comment-basic-reply-to">
       Reply to
     </span>,

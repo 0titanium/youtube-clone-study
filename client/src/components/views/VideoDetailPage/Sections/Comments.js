@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Button, Input } from "antd";
-import axios from "axios";
+import Axios from "axios";
 import SingleComment from "./SingleComment";
 import ReplyComment from "./ReplyComment";
 import { getCookie } from "../../../../getCookie/getCookie";
+import { COMMENT_SERVER } from "../../../../Config";
 
 function Comments(props) {
   const { TextArea } = Input;
@@ -13,7 +14,7 @@ function Comments(props) {
   const userId = getCookie("user_id", document.cookie);
 
   const fetchComments = (variables) => {
-    axios.post("/api/comment/saveComment", variables).then((response) => {
+    Axios.post(`${COMMENT_SERVER}saveComment`, variables).then((response) => {
       if (response.data.success) {
         console.log(response.data.id);
         setComment("");

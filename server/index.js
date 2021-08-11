@@ -8,6 +8,7 @@ const userRouter = require("./routes/users");
 const videoRouter = require("./routes/videos");
 const subsRouter = require("./routes/subscriber");
 const commentRouter = require("./routes/comments");
+const likeRouter = require("./routes/likes");
 
 // application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -38,7 +39,8 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/users", userRouter);
 app.use("/api/videos", videoRouter);
 app.use("/api/subscribe", subsRouter);
-app.use("/api/comment", commentRouter);
+app.use("/api/comments", commentRouter);
+app.use("/api/likes", likeRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
