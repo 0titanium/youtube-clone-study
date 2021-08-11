@@ -19,15 +19,15 @@ function SingleComment(props) {
       if (response.data.success) {
         setCommentValue("");
         setOpenReply(!OpenReply);
-        props.refreshFunction(response.data.result);
+        props.refreshFunction(response.data.id);
       } else {
-        alert("Failed to save Comment");
+        alert("댓글 입력에 실패했습니다.");
       }
     });
   };
 
   const handleChange = (event) => {
-    setCommentValue(event.currentTarget.CommentValue);
+    setCommentValue(event.currentTarget.value);
   };
 
   const openReply = () => {

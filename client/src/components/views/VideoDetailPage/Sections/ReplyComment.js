@@ -3,7 +3,7 @@ import SingleComment from "./SingleComment";
 
 function ReplyComment(props) {
   const [ChildCommentNumber, setChildCommentNumber] = useState(0);
-  const [OpenReplyComments, setOpenReplyComments] = useState(true);
+  const [OpenReplyComments, setOpenReplyComments] = useState(false);
 
   useEffect(() => {
     let commentNumber = 0;
@@ -17,8 +17,8 @@ function ReplyComment(props) {
     setChildCommentNumber(commentNumber);
   }, [props.CommentLists, props.parentCommentId]);
 
-  const renderReplyComment = (parentCommentId) => {
-    props.CommentLists.map((comment, index) => (
+  let renderReplyComment = (parentCommentId) => {
+    return props.CommentLists.map((comment, index) => (
       <React.Fragment key={index}>
         {comment.responseTo === parentCommentId && (
           <div style={{ width: "80%", marginLeft: "40px" }}>
@@ -39,7 +39,7 @@ function ReplyComment(props) {
     ));
   };
 
-  const handleChange = () => {
+  const handleClick = () => {
     setOpenReplyComments(!OpenReplyComments);
   };
 
@@ -48,7 +48,7 @@ function ReplyComment(props) {
       {ChildCommentNumber > 0 && (
         <p
           style={{ fontSize: "14px", margin: 0, color: "gray" }}
-          onClick={handleChange}
+          onClick={handleClick}
         >
           View {ChildCommentNumber} more comment(s)
         </p>

@@ -29,7 +29,7 @@ function VideoDetailPage(props) {
     setCommentLists(CommentLists.concat(newComment));
   };
 
-  const fetchVideos = () => {
+  const fetchVideos = (videoVariable) => {
     Axios.post(`${VIDEO_SERVER}/getVideoDetail`, videoVariable).then(
       (response) => {
         if (response.data.success) {
@@ -44,7 +44,7 @@ function VideoDetailPage(props) {
     console.log(CommentLists);
   };
 
-  const fetchComments = () => {
+  const fetchComments = (videoVariable) => {
     Axios.post("/api/comment/getComments", videoVariable).then((response) => {
       if (response.data.success) {
         console.log("response.data.comments", response.data.comments);
@@ -56,8 +56,8 @@ function VideoDetailPage(props) {
   };
 
   useEffect(() => {
-    fetchVideos();
-    fetchComments();
+    fetchVideos(videoVariable);
+    fetchComments(videoVariable);
   }, []);
 
   return (
