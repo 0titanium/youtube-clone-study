@@ -3,7 +3,7 @@ import Axios from "axios";
 import { VIDEO_SERVER } from "../../../Config";
 import { Typography, Row, Col, Avatar, Card } from "antd";
 import moment from "moment";
-import { getCookie } from "../../../getCookie/getCookie";
+import { getCookie } from "../../../utils/getCookie";
 
 function SubscriptionPage() {
   const { Title } = Typography;

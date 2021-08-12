@@ -3,7 +3,7 @@ import { Button, Input } from "antd";
 import Axios from "axios";
 import SingleComment from "./SingleComment";
 import ReplyComment from "./ReplyComment";
-import { getCookie } from "../../../../getCookie/getCookie";
+import { getCookie } from "../../../../utils/getCookie";
 import { COMMENT_SERVER } from "../../../../Config";
 
 function Comments(props) {
@@ -14,7 +14,7 @@ function Comments(props) {
   const userId = getCookie("user_id", document.cookie);
 
   const fetchComments = (variables) => {
-    Axios.post(`${COMMENT_SERVER}saveComment`, variables).then((response) => {
+    Axios.post(`${COMMENT_SERVER}/saveComment`, variables).then((response) => {
       if (response.data.success) {
         console.log(response.data.id);
         setComment("");

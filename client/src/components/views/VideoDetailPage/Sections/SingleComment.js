@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Comment, Avatar, Button, Input } from "antd";
 import Axios from "axios";
 import { useSelector } from "react-redux";
-import { getCookie } from "../../../../getCookie/getCookie";
+import { getCookie } from "../../../../utils/getCookie";
 import LikeDislikes from "./LikeDislikes";
 import { COMMENT_SERVER } from "../../../../Config";
 

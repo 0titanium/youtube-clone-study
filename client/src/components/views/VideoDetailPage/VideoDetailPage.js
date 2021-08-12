@@ -6,7 +6,7 @@ import SideVideos from "./Sections/SideVideos";
 import Subscriber from "./Sections/Subscriber";
 import Comments from "./Sections/Comments";
 import LikeDislikes from "./Sections/LikeDislikes";
-import { getCookie } from "../../../getCookie/getCookie";
+import { getCookie } from "../../../utils/getCookie";
 import { COMMENT_SERVER } from "../../../Config";
 
 function VideoDetailPage(props) {
@@ -81,12 +81,9 @@ function VideoDetailPage(props) {
 
           <List.Item
             actions={
-              SameUser && [
-                <LikeDislikes
-                  video
-                  videoId={videoId}
-                  userId={userId}
-                />,
+              // SameUser && 
+              [
+                <LikeDislikes video videoId={videoId} userId={userId} />,
                 <Subscriber
                   userTo={Video.writer}
                   userFrom={userId}

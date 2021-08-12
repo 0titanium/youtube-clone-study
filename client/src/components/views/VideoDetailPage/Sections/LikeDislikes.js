@@ -17,10 +17,19 @@ function LikeDislikes(props) {
 
   let variable = {};
 
+  // video like, reply like
   if (props.video) {
-    variable = { videoId: props.videoId, userId: props.userId };
+    if (props.userId === "") {
+      variable = { videoId: props.videoId };
+    } else {
+      variable = { videoId: props.videoId, userId: props.userId };
+    }
   } else {
-    variable = { commentId: props.commentId, userId: props.userId };
+    if (props.userId === "") {
+      variable = { commentId: props.commentId };
+    } else {
+      variable = { commentId: props.commentId, userId: props.userId };
+    }
   }
 
   const fetchLikesNum = (variable) => {
@@ -29,10 +38,13 @@ function LikeDislikes(props) {
         console.log(response.data);
         // 좋아요 수 세팅
         setLikes(response.data.likes.length);
+
         response.data.likes.map((like) => {
           if (like.userId === props.userId) {
             setLikeAction("liked");
           }
+
+          return like.length;
         });
       } else {
         alert("좋아요 숫자를 불러오는데 실패했습니다.");

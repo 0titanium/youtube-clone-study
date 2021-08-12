@@ -4,7 +4,7 @@ import Dropzone from "react-dropzone";
 import { PlusOutlined } from "@ant-design/icons";
 import Axios from "axios";
 import { VIDEO_SERVER } from "../../../Config";
-import { getCookie } from "../../../getCookie/getCookie";
+import { getCookie } from "../../../utils/getCookie";
 
 function UploadVideoPage(props) {
   const userId = getCookie("user_id", document.cookie);

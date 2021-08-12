@@ -6,8 +6,13 @@ const { Dislike } = require("../models/Dislike");
 router.post("/getLikes", (req, res) => {
   let variable = {};
 
+  // video like, reply like
   if (req.body.videoId) {
-    variable = { videoId: req.body.videoId, userId: req.body.userId };
+    if (req.body.userId === "") {
+      variable = { videoId: req.body.videoId };
+    } else {
+      variable = { videoId: req.body.videoId, userId: req.body.userId };
+    }
   } else {
     variable = { commentId: req.body.commentId, userId: req.body.userId };
   }
