@@ -8,13 +8,17 @@ router.post("/getLikes", (req, res) => {
 
   // video like, reply like
   if (req.body.videoId) {
-    if (req.body.userId === "") {
+    if (!req.body.userId) {
       variable = { videoId: req.body.videoId };
     } else {
       variable = { videoId: req.body.videoId, userId: req.body.userId };
     }
   } else {
-    variable = { commentId: req.body.commentId, userId: req.body.userId };
+    if (!req.body.userId) {
+      variable = { commentId: req.body.commentId };
+    } else {
+      variable = { commentId: req.body.commentId, userId: req.body.userId };
+    }
   }
 
   Like.find(variable).exec((err, likes) => {
@@ -30,9 +34,17 @@ router.post("/getDislikes", (req, res) => {
   let variable = {};
 
   if (req.body.videoId) {
-    variable = { videoId: req.body.videoId, userId: req.body.userId };
+    if (!req.body.userId) {
+      variable = { videoId: req.body.videoId };
+    } else {
+      variable = { videoId: req.body.videoId, userId: req.body.userId };
+    }
   } else {
-    variable = { commentId: req.body.commentId, userId: req.body.userId };
+    if (!req.body.userId) {
+      variable = { commentId: req.body.commentId };
+    } else {
+      variable = { commentId: req.body.commentId, userId: req.body.userId };
+    }
   }
 
   Dislike.find(variable).exec((err, dislikes) => {
