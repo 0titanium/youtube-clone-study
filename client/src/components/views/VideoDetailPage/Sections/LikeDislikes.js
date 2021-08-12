@@ -17,7 +17,7 @@ function LikeDislikes(props) {
 
   let variable = {};
 
-  // video like, reply like
+  // video like, reply like, not login user
   if (props.video) {
     if (props.userId === "") {
       variable = { videoId: props.videoId };
