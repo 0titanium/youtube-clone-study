@@ -19,6 +19,7 @@ export default function authFunc(SpecificComponent, option, adminRoute = null) {
         // 로그인하지 않은 상태
         if (!response.payload.isAuth) {
           if (option) {
+            alert("로그인이 필요한 기능입니다.");
             props.history.push("/login");
           }
         } else {

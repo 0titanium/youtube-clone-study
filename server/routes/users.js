@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const { User } = require("../models/User");
 const { auth } = require("../middleware/auth");
 
@@ -50,7 +51,7 @@ router.post("/login", (req, res) => {
 
         // 토큰을 저장 (쿠키, 세션, 로컬스토리지등 어디가 제일 안전한지는 논란)
         // 여기선 쿠키에 저장
-        
+
         res
           .cookie("x_auth", user.token)
           .cookie("user_id", user._id.toString())
@@ -74,10 +75,10 @@ router.get("/auth", auth, (req, res) => {
     isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
     email: req.user.email,
-    name: req.user.name,
+    name: !req.user.name ? "" : req.user.name,
     lastname: req.user.lastname,
     role: req.user.role,
-    image: req.user.image,
+    image: !req.user.image ? "" : req.user.image,
   });
 });
 
@@ -90,6 +91,31 @@ router.post("/logout", auth, (req, res) => {
     res.clearCookie("x_auth");
     res.clearCookie("user_id");
     return res.status(200).send({ logoutSuccess: true });
+  });
+});
+
+// 유저 데이터 보내기
+router.post("/getInfo", (req, res) => {
+  let userId = mongoose.Types.ObjectId(req.body.userId);
+  let userImage = "";
+  let userName = "";
+
+  User.find({ _id: userId }).exec((err, user) => {
+    if (err) {
+      return res.status(400).json({ success: false, err });
+    }
+
+    if (user[0].image) {
+      userImage = user[0].image;
+    }
+
+    userName = user[0].name;
+
+    return res.status(200).json({
+      success: true,
+      userImage: userImage,
+      userName: userName,
+    });
   });
 });
 
