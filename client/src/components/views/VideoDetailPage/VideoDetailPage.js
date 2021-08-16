@@ -81,9 +81,15 @@ function VideoDetailPage(props) {
 
           <List.Item
             actions={
-              // SameUser && 
+              // SameUser &&
               [
-                <LikeDislikes video videoId={videoId} userId={userId} />,
+                <LikeDislikes
+                  video
+                  videoId={videoId}
+                  userId={userId}
+                  userTo={Video.writer}
+                  isLogin={userId !== "" ? true : false}
+                />,
                 <Subscriber
                   userTo={Video.writer}
                   userFrom={userId}

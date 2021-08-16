@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { SUBS_SERVER } from "../../../../Config";
+import { getCookie } from "../../../../utils/getCookie";
 
 function Subscriber(props) {
   const userTo = props.userTo;
   const userFrom = props.userFrom;
   const isLogin = props.isLogin;
+  const userId = getCookie("user_id", document.cookie);
 
   const [SubscriberNumber, setSubscriberNumber] = useState(0);
   const [Subscribed, setSubscribed] = useState(false);
-
-  // const isLogin =
 
   // 구독자 수 가져오기
   const fetchSubsNum = (subscribeNumberVariables) => {
@@ -88,6 +88,7 @@ function Subscriber(props) {
 
     if (!isLogin) {
       alert("로그인이 필요한 기능입니다.");
+    } else if (userTo._id === userId) {
     } else {
       if (Subscribed) {
         fetchUnSubscribe(subscribeVariables);

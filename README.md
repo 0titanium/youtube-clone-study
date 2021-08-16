@@ -293,7 +293,7 @@ navBar에 user name을 <p></p>로 표시했더니 미친듯이 리렌더링되�
 
 
 
-- login시 navBar logout -> |Avartar+name| -> dropdown |My Page|Logout| 변환중. 문제는 redux로 image랑 name을 받아오니까 cannot property erro가 발생한다는 것이다. 렌더링과 데이터를 받는 속도 차이때문이 아닌가 싶다. req,res를 하나 더 작성해서 유저데이터를 따로 받아야 할지도 모른다.
+- login시 navBar logout -> |Avartar+name| -> dropdown |My Page|Logout| 변환중. 문제는 redux로 image랑 name을 받아오니까 cannot property error가 발생한다는 것이다. 렌더링과 데이터를 받는 속도 차이때문이 아닌가 싶다. req,res를 하나 더 작성해서 유저데이터를 따로 받아야 할지도 모른다.
 
 
 새로고침할때도 안되는 건 왜일까?
@@ -310,3 +310,46 @@ navBar에 user name을 <p></p>로 표시했더니 미친듯이 리렌더링되�
 
 
 2021-08-13
+
+
+
+***
+
+
+- 모든 것을 post method로 처리하는 것이 안좋아보인다. get method를 써야할 때 데이터를 보내줘야하는데 post - get 순으로 두번 해야하나?
+
+
+-> axios get method로 데이터를 보내는 것은 불가능하다고 하는 것 같다. post - get으로 처리해야하는 것 같다.
+
+
+- name이 렌더링되는 것은 여전히 느리다. 느린 수준이 아니고 리렌더링 하지않으면 안된다.
+
+
+-> useEffect에 userInfo(, userId)를 포함시키니 업데이트가 조금 느리지만 반영된다. useEffect []안에 넣으면 무한 리렌더링되는 것도 있는데 차이점이 무엇인지.
+
+
+- 자신의 아이디로 videoDetail에 들어가면 좋아요수 표시 안되는 현상, 자기 자신을 구독, 좋아요 싫어요 할 수있는 현상 고치기 부터.
+
+
+-> 자기 자신 구독, 좋아요, 싫어요는 video.writer(props.userTo) === userId가 같으면 아무 처리도 하지않게 조건문을 작성했다.
+
+
+-> 남이 좋아요 싫어요 누른 숫자를 확인하도록 수정할 것. 현 상황 = "비로그인 유저, 다른 유저는 videoDetail page 좋아요 수가 보이는데 유저===업로드 유저인 상황에서 videoDetail page 좋아요 수가 보이지 않는다." 
+
+
+-> 해결. LikesDislikes.js에서 req를 보낼 때 video.writer(props.userId) === userId가 같을 때 처리를 해줬다.
+
+
+- myPage, 댓글에서 삭제버튼을 추가하는 작업. 클릭하면 view 수를 올리는 작업도 해야한다.
+
+
+-> 좋아요, 댓글도 다 삭제되어야한다. 구독은 어떻게 되는 건지 살펴봐야한다. 계속 뭔가 추가하는 것보다 
+
+
+   댓글에 삭제버튼 만드는 것으로 이번 것은 마무리하고 새로운 것을 만들어보는게 좋을까?
+
+
+-> video._id를 넘겨주면 무한렌더링 발생.
+
+
+2021-08-16

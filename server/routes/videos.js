@@ -158,4 +158,31 @@ router.post("/getSubscriptionVideos", (req, res) => {
   });
 });
 
+// 자신이 업로드한 영상 가져오기
+router.post("/getMyVideos", (req, res) => {
+  Video.find({ writer: req.body.userId })
+    .populate("writer")
+    .exec((err, videos) => {
+      if (err) {
+        return res.status(400).json({ success: false, err });
+      }
+
+      return res.status(200).json({ success: true, videos });
+    });
+});
+
+// 자신의 영상 삭제하기
+
+router.delete("/deleteVideo", (req, res) => {
+  Video.findOneAndDelete({ _id: req.body.videoId })
+    .populate("_id")
+    .exec((err) => {
+      if (err) {
+        return res.status(400).json({ success: false, err });
+      }
+
+      return res.status(200).json({ success: true });
+    });
+});
+
 module.exports = router;

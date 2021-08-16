@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Tooltip } from "antd";
 import Axios from "axios";
 import { LIKE_SERVER } from "../../../../Config";
+import { getCookie } from "../../../../utils/getCookie";
 import {
   LikeOutlined,
   DislikeOutlined,
@@ -14,12 +15,14 @@ function LikeDislikes(props) {
   const [Dislikes, setDislikes] = useState(0);
   const [LikeAction, setLikeAction] = useState(null);
   const [DislikeAction, setDislikeAction] = useState(null);
+  const isLogin = props.isLogin;
+  const userId = getCookie("user_id", document.cookie);
 
   let variable = {};
 
   // video like, reply like, not login user
   if (props.video) {
-    if (props.userId === "") {
+    if (props.userId === "" || props.userId === userId) {
       variable = { videoId: props.videoId };
     } else {
       variable = { videoId: props.videoId, userId: props.userId };
@@ -43,8 +46,6 @@ function LikeDislikes(props) {
           if (like.userId === props.userId) {
             setLikeAction("liked");
           }
-
-          return like.length;
         });
       } else {
         alert("좋아요 숫자를 불러오는데 실패했습니다.");
@@ -136,26 +137,28 @@ function LikeDislikes(props) {
   }, []);
 
   const onLike = () => {
-    if (props.userId !== "") {
+    if (!isLogin) {
+      alert("로그인이 필요한 기능입니다.");
+    } else if (props.userTo._id === userId) {
+    } else {
       if (LikeAction === null) {
         fetchLike(variable);
       } else {
         fetchUnlike(variable);
       }
-    } else {
-      alert("로그인이 필요한 기능입니다.");
     }
   };
 
   const onDisLike = () => {
-    if (props.userId !== "") {
+    if (!isLogin) {
+      alert("로그인이 필요한 기능입니다.");
+    } else if (props.userTo._id === userId) {
+    } else {
       if (DislikeAction === null) {
         fetchDisLike(variable);
       } else {
         fetchUnDislike(variable);
       }
-    } else {
-      alert("로그인이 필요한 기능입니다.");
     }
   };
 

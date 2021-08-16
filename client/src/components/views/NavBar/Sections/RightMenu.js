@@ -14,7 +14,6 @@ function RightMenu(props) {
   const dispatch = useDispatch();
   const [UserName, setUserName] = useState("");
   const [UserImage, setUserImage] = useState("");
-
   const userInfo = {
     userId: userId,
   };
@@ -23,7 +22,9 @@ function RightMenu(props) {
     Axios.post(`${USER_SERVER}/getInfo`, userInfo).then((response) => {
       if (response.data.success) {
         console.log(response.data);
-        setUserName(response.data.userName);
+        if (response.data.userName) {
+          setUserName(response.data.userName);
+        }
         setUserImage(response.data.userImage);
       } else {
         alert("사용자 정보를 불러오는데 실패했습니다.");
@@ -34,15 +35,14 @@ function RightMenu(props) {
   useEffect(() => {
     if (userId) {
       fetchUser(userInfo);
-    } else {
-      setUserName("");
-      setUserImage("");
     }
-  }, []);
+  }, [userInfo, userId]);
 
   const logoutHandler = () => {
     dispatch(logoutUser()).then((response) => {
       if (response.payload.logoutSuccess) {
+        setUserImage("");
+        setUserName("");
         props.history.push("/login"); // withRouter 필요
       } else {
         alert("Error");
