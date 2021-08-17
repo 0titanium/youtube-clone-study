@@ -43,7 +43,6 @@ function VideoDetailPage(props) {
         }
       }
     );
-    console.log(CommentLists);
   };
 
   const fetchComments = (videoVariable) => {

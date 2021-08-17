@@ -173,15 +173,16 @@ router.post("/getMyVideos", (req, res) => {
 
 // 자신의 영상 삭제하기
 
-router.delete("/deleteVideo", (req, res) => {
+router.post("/deleteVideo", (req, res) => {
+  console.log(req.body)
   Video.findOneAndDelete({ _id: req.body.videoId })
     .populate("_id")
-    .exec((err) => {
+    .exec((err, videos) => {
       if (err) {
         return res.status(400).json({ success: false, err });
       }
 
-      return res.status(200).json({ success: true });
+      return res.status(200).json({ success: true, videos });
     });
 });
 
