@@ -377,4 +377,13 @@ navBar에 user name을 <p></p>로 표시했더니 미친듯이 리렌더링되�
 -> 아닌가? 하면 할 수록 헷갈린다.
 
 
+-> ShowUploads에서 fetch get videos, fetch delete video 두 함수를 넣고 fetch delete 실행에 성공하면 fetch get을 또 실행하도록 했다.
+
+
+-> 리렌더링이 전혀 안되더니 이렇게 하니까 리렌더링이 여러번 발생하는 것 같다.
+
+
+- 댓글 삭제까지만 구현하고 이번건 마무리해야겠다.
+
+
 2021-08-17

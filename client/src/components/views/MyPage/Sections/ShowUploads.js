@@ -1,39 +1,103 @@
 import React, { useState, useEffect } from "react";
 import { VIDEO_SERVER } from "../../../../Config";
 import Axios from "axios";
-import DeleteVideo from "./DeleteVideo";
-import { Col, Avatar, Card } from "antd";
+import { Col, Avatar, Card, Button, Modal } from "antd";
 import moment from "moment";
+import { DeleteFilled } from "@ant-design/icons";
 
 function ShowUploads(props) {
   const { Meta } = Card;
-//   const [Videos, setVideos] = useState([]);
-//   const userId = props.userId;
-//   const userInfo = {
-//     userId: userId,
-//   };
+  const [Videos, setVideos] = useState([]);
+  const userId = props.userId;
+  const userInfo = {
+    userId: userId,
+  };
 
-//   const fetchMyVideos = (userInfo) => {
-//     Axios.post(`${VIDEO_SERVER}/getMyVideos`, userInfo).then((response) => {
-//       if (response.data.success) {
-//         console.log(response.data);
-//         setVideos(response.data.videos);
-//         props.refreshFunc(response.data.videos);
-//       } else {
-//         alert("비디오를 가져오는데 실패했습니다.");
-//       }
-//     });
-//   };
+  // get videos
+  const fetchMyVideos = (userInfo) => {
+    Axios.post(`${VIDEO_SERVER}/getMyVideos`, userInfo).then((response) => {
+      if (response.data.success) {
+        console.log(response.data);
+        setVideos(response.data.videos);
+      } else {
+        alert("비디오를 가져오는데 실패했습니다.");
+      }
+    });
+  };
 
-//   console.log(Videos.length);
+  // delete video
+  const fetchDeleteVideo = (deleteInfo) => {
+    Axios.post(`${VIDEO_SERVER}/deleteVideo`, deleteInfo).then((response) => {
+      if (response.data.success) {
+        fetchMyVideos(userInfo);
+      } else {
+        alert("비디오를 삭제하는데 실패했습니다.");
+      }
+    });
+  };
 
-//   useEffect(() => {
-//     if (userId) {
-//       fetchMyVideos(userInfo);
-//     }
-//   }, []);
+  useEffect(() => {
+    if (userId) {
+      fetchMyVideos(userInfo);
+    }
+  }, []);
 
-  const renderCards = props.VideoLists.reverse().map((video, index) => {
+  // modal
+
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState("삭제하시겠습니까?");
+
+  const deleteComponent = (videoId) => {
+    const deleteInfo = {
+      videoId: videoId,
+    };
+
+    const showModal = () => {
+      setVisible(true);
+    };
+
+    const handleCancel = () => {
+      setVisible(false);
+    };
+
+    const handleOk = () => {
+      setModalText("삭제하시겠습니까?");
+      setConfirmLoading(true);
+      fetchDeleteVideo(deleteInfo);
+      setTimeout(() => {
+        setVisible(false);
+        setConfirmLoading(false);
+      }, 2000);
+    };
+
+    return (
+      <React.Fragment>
+        <Button
+          onClick={showModal}
+          style={{
+            bottom: "1px",
+            right: "8px",
+            position: "absolute",
+            color: "red",
+          }}
+        >
+          <DeleteFilled />
+        </Button>
+        <Modal
+          title="Delete"
+          visible={visible}
+          onOk={handleOk}
+          confirmLoading={confirmLoading}
+          onCancel={handleCancel}
+        >
+          <p>{modalText}</p>
+        </Modal>
+      </React.Fragment>
+    );
+  };
+
+  const renderCards = Videos.reverse().map((video, index) => {
     let minutes = Math.floor(video.duration / 60);
     let seconds = Math.floor(video.duration - minutes * 60);
 
@@ -79,12 +143,16 @@ function ShowUploads(props) {
         <br />
         <span style={{ marginLeft: "3rem" }}> {video.views}</span>
         <span> {moment(video.createdAt).format("MMM Do YY")} </span>
-        <DeleteVideo videoId={video._id} refreshFunc={props.refreshFunc} />
+        {deleteComponent(video._id)}
       </Col>
     );
   });
 
-  return <React.Fragment>{props.VideoLists.length !== 0 && renderCards}</React.Fragment>;
+  return (
+    <React.Fragment>
+      {Videos !== [] && renderCards}
+    </React.Fragment>
+  );
 }
 
 export default ShowUploads;

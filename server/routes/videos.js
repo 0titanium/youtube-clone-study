@@ -177,12 +177,12 @@ router.post("/deleteVideo", (req, res) => {
   console.log(req.body)
   Video.findOneAndDelete({ _id: req.body.videoId })
     .populate("_id")
-    .exec((err, videos) => {
+    .exec((err) => {
       if (err) {
         return res.status(400).json({ success: false, err });
       }
 
-      return res.status(200).json({ success: true, videos });
+      return res.status(200).json({ success: true });
     });
 });
 
