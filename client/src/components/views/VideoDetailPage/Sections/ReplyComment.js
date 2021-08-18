@@ -25,6 +25,7 @@ function ReplyComment(props) {
             <SingleComment
               comment={comment}
               postId={props.postId}
+              writerId={comment.writer._id}
               refreshFunction={props.refreshFunction}
             />
             <ReplyComment

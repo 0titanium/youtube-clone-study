@@ -17,7 +17,7 @@ router.post("/saveComment", (req, res) => {
           return res.status(400).json({ success: false, err });
         }
 
-        res.status(200).json({ success: true, id });
+        return res.status(200).json({ success: true, id });
       });
   });
 });
@@ -29,8 +29,20 @@ router.post("/getComments", (req, res) => {
       if (err) {
         return res.status(400).json({ success: false, err });
       }
-      
-      res.status(200).json({ success: true, comments });
+
+      return res.status(200).json({ success: true, comments });
+    });
+});
+
+router.post("/deleteComment", (req, res) => {
+  Comment.findOneAndDelete({ _id: req.body._id })
+    .populate("_id")
+    .exec((err) => {
+      if (err) {
+        return res.status(400).json({ success: false, err });
+      }
+
+      return res.status(200).json({ success: true });
     });
 });
 

@@ -28,7 +28,8 @@ function VideoDetailPage(props) {
   };
 
   const updateComment = (newComment) => {
-    setCommentLists(CommentLists.concat(newComment));
+    // setCommentLists(CommentLists.concat(newComment)); // add new comment
+    fetchComments(videoVariable); // get all comments again
   };
 
   const fetchVideos = (videoVariable) => {
@@ -79,23 +80,20 @@ function VideoDetailPage(props) {
           )}
 
           <List.Item
-            actions={
-              // SameUser &&
-              [
-                <LikeDislikes
-                  video
-                  videoId={videoId}
-                  userId={userId}
-                  userTo={Video.writer}
-                  isLogin={userId !== "" ? true : false}
-                />,
-                <Subscriber
-                  userTo={Video.writer}
-                  userFrom={userId}
-                  isLogin={userId !== "" ? true : false}
-                />,
-              ]
-            }
+            actions={[
+              <LikeDislikes
+                video
+                videoId={videoId}
+                userId={userId}
+                userTo={Video.writer}
+                isLogin={userId !== "" ? true : false}
+              />,
+              <Subscriber
+                userTo={Video.writer}
+                userFrom={userId}
+                isLogin={userId !== "" ? true : false}
+              />,
+            ]}
           >
             <List.Item.Meta
               avatar={<Avatar src={Video.writer && Video.writer.image} />}

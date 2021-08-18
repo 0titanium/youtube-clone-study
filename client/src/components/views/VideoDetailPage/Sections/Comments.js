@@ -12,7 +12,7 @@ function Comments(props) {
   const [Comment, setComment] = useState("");
 
   const userId = getCookie("user_id", document.cookie);
-
+  
   const fetchComments = (variables) => {
     Axios.post(`${COMMENT_SERVER}/saveComment`, variables).then((response) => {
       if (response.data.success) {
@@ -61,11 +61,13 @@ function Comments(props) {
                 <SingleComment
                   comment={comment}
                   postId={props.postId}
+                  writerId={comment.writer._id}
                   refreshFunction={props.refreshFunction}
                 />
                 <ReplyComment
                   CommentLists={props.CommentLists}
                   postId={props.postId}
+                  writerId={comment.writer._id}
                   parentCommentId={comment._id}
                   refreshFunction={props.refreshFunction}
                 />
