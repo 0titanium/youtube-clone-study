@@ -54,7 +54,7 @@
 .
 |-- README.md
 |-- public
-|   `-- index.html
+|   +-- index.html
 |-- src
 |   |-- App.js
 |   |-- Config.js
