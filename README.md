@@ -50,6 +50,7 @@
 - client
 
 
+.
 |-- README.md
 |-- public
 |   `-- index.html
@@ -110,6 +111,7 @@
 - server
 
 
+.
 |-- config
 |   |-- dev.js
 |   |-- key.js
