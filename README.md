@@ -11,11 +11,16 @@
 ##### youtube clone study
 
 
+- web site like youtube
+
+
+##### Tech stack
+
+
 - frontend: html, css, react, redux 
 
 
 - backend: nodejs, expressjs, mongodb atlas
-
 
 
 ##### functions
@@ -45,7 +50,153 @@
 - client
 
 
+|-- README.md
+|-- public
+|   `-- index.html
+|-- src
+|   |-- App.js
+|   |-- Config.js
+|   |-- _actions
+|   |   |-- types.js
+|   |   `-- user_action.js
+|   |-- _reducers
+|   |   |-- index.js
+|   |   `-- user_reducer.js
+|   |-- components
+|   |   `-- views
+|   |       |-- Footer
+|   |       |   `-- Footer.js
+|   |       |-- LandingPage
+|   |       |   `-- LandingPage.js
+|   |       |-- LoginPage
+|   |       |   `-- LoginPage.js
+|   |       |-- MyPage
+|   |       |   |-- MyPage.js
+|   |       |   `-- Sections
+|   |       |       `-- ShowUploads.js
+|   |       |-- NavBar
+|   |       |   |-- NavBar.js
+|   |       |   `-- Sections
+|   |       |       |-- LeftMenu.js
+|   |       |       |-- NavBar.css
+|   |       |       `-- RightMenu.js
+|   |       |-- RegisterPage
+|   |       |   `-- RegisterPage.js
+|   |       |-- SubscriptionPage
+|   |       |   `-- SubscriptionPage.js
+|   |       |-- UploadVideoPage
+|   |       |   `-- UploadVideoPage.js
+|   |       `-- VideoDetailPage
+|   |           |-- Sections
+|   |           |   |-- Comments.js
+|   |           |   |-- LikeDislikes.js
+|   |           |   |-- ReplyComment.js
+|   |           |   |-- SideVideos.js
+|   |           |   |-- SingleComment.js
+|   |           |   `-- Subscriber.js
+|   |           `-- VideoDetailPage.js
+|   |-- hoc
+|   |   `-- auth.js
+|   |-- index.css
+|   |-- index.js
+|   |-- reportWebVitals.js
+|   |-- setupProxy.js
+|   |-- setupTests.js
+|   `-- utils
+|       `-- getCookie.js
+`-- yarn.lock
+
+
 - server
+
+
+|-- config
+|   |-- dev.js
+|   |-- key.js
+|   `-- prod.js
+|-- index.js
+|-- middleware
+|   `-- auth.js
+|-- models
+|   |-- Comment.js
+|   |-- Dislike.js
+|   |-- Like.js
+|   |-- Subscriber.js
+|   |-- User.js
+|   `-- Video.js
+|-- routes
+    |-- comments.js
+    |-- likes.js
+    |-- subscriber.js
+    |-- users.js
+    `-- videos.js
+|
+`-- uploads
+    `-- thumbnails
+
+
+##### Backend architecture
+
+
+- Routes / endpoints
+
+
+   - "/api/users" (userRoutes)
+      - "/register"
+      - "/login"
+      - "/auth"
+      - "/logout"
+      - "/getInfo"
+
+
+   - "/api/videos" (videoRoutes)
+      - "/uploadfiles"
+      - "/thumbnail"
+      - "/uploadVideo"
+      - "/getVideos"
+      - "/getVideoDetail"
+      - "/getSubscriptionVideos"
+      - "/getMyVideos"
+      -  "/deleteVideo"
+
+
+   - "/api/subscribe" (subsRouter)
+      - "/subscriberNumber"
+      - "/subscribed"
+      - "/subscribe"
+      - "/unSubscribe"
+
+
+   - "/api/comments" (commentRouter)
+      - "/saveComment"
+      - "/getComments"
+      - "/deleteComment"
+
+
+   - "/api/likes" (likeRouter)
+      - "/getLikes"
+      - "/getDislikes"
+      - "/upLike"
+      - "/unLike"
+      - "/upDislike"
+      - "/unDislike"
+
+
+##### Frontend architecture
+
+
+- Redux role
+
+
+   - register -> register button(click) -> dispatch(registerUser) -> store -(previous state, action)-> <-(new state)- user_reducer
+
+   - login -> login button(click) -> dispatch(loginUser) -> store -(previous state, action)-> <-(new state)- user_reducer
+
+
+   - auth() -> enter pages -> dispatch(auth) -> store -(previous state, action)-> <-(new state)- user_reducer
+
+
+   - logout -> logout button(click) -> dispatch(logoutUser) -> store -(previous state, action)-> <-(new state)- user_reducer
 
 
 ***
