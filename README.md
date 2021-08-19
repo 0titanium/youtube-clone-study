@@ -50,6 +50,7 @@
 - client
 
 
+``` bash
 .
 |-- README.md
 |-- public
@@ -106,11 +107,13 @@
 |   `-- utils
 |       `-- getCookie.js
 `-- yarn.lock
+```
 
 
 - server
 
 
+``` bash
 .
 |-- config
 |   |-- dev.js
@@ -135,6 +138,7 @@
 |
 `-- uploads
     `-- thumbnails
+```
 
 
 ##### Backend architecture
