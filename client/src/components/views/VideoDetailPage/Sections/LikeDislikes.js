@@ -22,19 +22,12 @@ function LikeDislikes(props) {
 
   // video like, reply like, not login user
   if (props.video) {
-    if (props.userId === "" || props.userId === userId) {
-      variable = { videoId: props.videoId };
-    } else {
-      variable = { videoId: props.videoId, userId: props.userId };
-    }
+    variable = { videoId: props.videoId, userId: props.userId };
   } else {
-    if (props.userId === "") {
-      variable = { commentId: props.commentId };
-    } else {
-      variable = { commentId: props.commentId, userId: props.userId };
-    }
+    variable = { commentId: props.commentId, userId: props.userId };
   }
 
+  console.log(LikeAction);
   const fetchLikesNum = (variable) => {
     Axios.post(`${LIKE_SERVER}/getLikes`, variable).then((response) => {
       if (response.data.success) {
@@ -43,6 +36,7 @@ function LikeDislikes(props) {
         setLikes(response.data.likes.length);
 
         response.data.likes.map((like) => {
+          console.log(like.userId, props.userId);
           if (like.userId === props.userId) {
             setLikeAction("liked");
           }
@@ -137,9 +131,8 @@ function LikeDislikes(props) {
   }, []);
 
   const onLike = () => {
-    if (!isLogin) {
+    if (!userId) {
       alert("로그인이 필요한 기능입니다.");
-    } else if (props.userTo._id === userId) {
     } else {
       if (LikeAction === null) {
         fetchLike(variable);
@@ -150,9 +143,8 @@ function LikeDislikes(props) {
   };
 
   const onDisLike = () => {
-    if (!isLogin) {
+    if (!userId) {
       alert("로그인이 필요한 기능입니다.");
-    } else if (props.userTo._id === userId) {
     } else {
       if (DislikeAction === null) {
         fetchDisLike(variable);
