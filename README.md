@@ -163,7 +163,7 @@
       - "/getVideoDetail"
       - "/getSubscriptionVideos"
       - "/getMyVideos"
-      -  "/deleteVideo"
+      - "/deleteVideo"
 
 
    - "/api/subscribe" (subsRouter)
