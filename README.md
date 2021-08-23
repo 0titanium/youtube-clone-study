@@ -191,6 +191,29 @@
 ##### Frontend architecture
 
 
+- Routes
+
+   - "/"
+
+
+   - "/register"
+
+
+   - "/login"
+
+
+   - "/video/upload"
+
+
+   - "/video/:videoId"
+
+
+   - "/subscription"
+
+
+   - "/mypage"
+
+
 - Redux role
 
 
